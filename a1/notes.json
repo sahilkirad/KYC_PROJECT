@@ -1,0 +1,21 @@
+{
+    "categories": [
+      {
+        "id": 0,
+        "name": "adhere"
+      },
+      {
+        "id": 1,
+        "name": "pan"
+      },
+      {
+        "id": 2,
+        "name": "passport"
+      }
+    ],
+    "info": {
+      "year": 2023,
+      "version": "1.0",
+      "contributor": "Label Studio"
+    }
+  }

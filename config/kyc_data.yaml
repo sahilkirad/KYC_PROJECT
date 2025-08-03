@@ -1,0 +1,5 @@
+train: D:/KYC_Project/datasets/processed/train
+val: D:/KYC_Project/datasets/processed/val
+test: D:/KYC_Project/datasets/processed/test
+nc: 2
+names: ['aadhaar', 'pan_card']

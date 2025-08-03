@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .upload-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .error {
+            color: red;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .debug {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .valid {
+            color: green;
+            font-weight: bold;
+        }
+        .invalid {
+            color: red;
+            font-weight: bold;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        .status.valid {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status.invalid {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KYC Verification</h1>
+        <div class="upload-form">
+            <form method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".jpg,.jpeg,.png">
+                <input type="submit" value="Upload and Process">
+            </form>
+        </div>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        {% if result %}
+            <div class="result">
+                <h2>Result:</h2>
+                <p><strong>Document Type:</strong> {{ result['class']|title }}</p>
+                <p><strong>Extracted Text:</strong> 
+                    {% if result['text'] %}
+                        <span class="valid">{{ result['text'] }}</span>
+                    {% else %}
+                        <span class="invalid">No text extracted</span>
+                    {% endif %}
+                </p>
+                <p><strong>Validation Status:</strong> 
+                    {% if result['valid'] %}
+                        <span class="status valid">✓ VALID</span>
+                    {% else %}
+                        <span class="status invalid">✗ INVALID</span>
+                    {% endif %}
+                </p>
+                <div class="debug">
+                    <p><strong>Raw OCR Output (EasyOCR):</strong></p>
+                    <pre>{{ result['raw_text'] }}</pre>
+                </div>
+            </div>
+        {% endif %}
+        {% if image_path %}
+            <h2>Uploaded Image:</h2>
+            <img src="{{ image_path }}" alt="Uploaded Image">
+        {% endif %}
+        {% if cropped_image_path %}
+            <h2>Cropped Region (Used for OCR):</h2>
+            <img src="{{ cropped_image_path }}" alt="Cropped Image">
+        {% endif %}
+    </div>
+</body>
+</html>
